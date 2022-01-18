@@ -1,4 +1,15 @@
 vitis_dir=/opt/Xilinx
+for mfile in bitbake.lock hashserve.sock bitbake.sock; do
+    mfile2="step2_petalinux/build/petalinux/build/$mfile"
+    echo $mfile2
+    if [ -f $mfile2 ]; then
+        cmd="rm $mfile2"
+        echo $cmd
+        $cmd
+    fi
+done
+#exit 0
+
 petalinux_dir=/opt/focal/PetaLinux
 settings=()
 settings+=("$vitis_dir/Vitis/2021.2/settings64.sh")
@@ -10,6 +21,14 @@ for setting in "${settings[@]}"; do
     echo $cmd
     $cmd
 done
-make -C step2_petalinux petalinux_build
-make -C step2_petalinux petalinux_build_sdk
-make -C step3_pfm all
+#exit 0
+
+if "$1" == "all"; then
+    cmd="make all"
+    echo $cmd
+    $cmd
+else
+    make -C step2_petalinux petalinux_build
+    make -C step2_petalinux petalinux_build_sdk
+    make -C step3_pfm all
+fi
