@@ -62,6 +62,7 @@ update_rootfs_config:
 	echo 'CONFIG_packagegroup-petalinux-matchbox=y' >> $(PETALINUX_ROOTFS_CONFIG)
 
 
+    # mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
 
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
@@ -73,7 +74,7 @@ petalinux_proj:
 
 petalinux_build:
 	petalinux-build -p $(PETALINUX_DIR)
-	cd $(PETALINUX_DIR) && petalinux-package --boot --u-boot
+	cd $(PETALINUX_DIR) && petalinux-package --boot --u-boot --force
 
 petalinux_build_sdk:
 	petalinux-build -p $(PETALINUX_DIR) --sdk
@@ -81,3 +82,4 @@ petalinux_build_sdk:
 
 clean:
 	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.xsa
+	#$(RM) -r  vivado*.log vivado*.jou *.xsa

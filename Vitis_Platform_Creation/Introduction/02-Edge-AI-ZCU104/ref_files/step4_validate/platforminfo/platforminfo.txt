@@ -1,0 +1,78 @@
+==========================
+Basic Platform Information
+==========================
+Platform:           zcu104_custom_platform
+File:               /work/eli/git/Vitis-Tutorials/Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/ref_files/step3_pfm/platform_repo/zcu104_custom_platform/export/zcu104_custom_platform/zcu104_custom_platform.xpfm
+Description:        
+A custom platform ZCU104 platform
+    
+
+=====================================
+Hardware Platform (Shell) Information
+=====================================
+Vendor:                           xilinx
+Board:                            ZCU104_Custom_Platform
+Name:                             ZCU104_Custom_Platform
+Version:                          0.0
+Generated Version:                2021.2
+Hardware:                         1
+Software Emulation:               1
+Hardware Emulation:               1
+Hardware Emulation Platform:      0
+FPGA Family:                      zynquplus
+FPGA Device:                      xczu7ev
+Board Vendor:                     xilinx.com
+Board Name:                       xilinx.com:zcu104:1.1
+Board Part:                       xczu7ev-ffvc1156-2-e
+
+=================
+Clock Information
+=================
+  Default Clock Index: 2
+  Clock Index:         1
+    Frequency:         100.000000
+  Clock Index:         2
+    Frequency:         200.000000
+  Clock Index:         3
+    Frequency:         400.000000
+
+==================
+Memory Information
+==================
+  Bus SP Tag: HP0
+  Bus SP Tag: HP1
+  Bus SP Tag: HP2
+  Bus SP Tag: HP3
+  Bus SP Tag: HPC0
+  Bus SP Tag: HPC1
+
+=============================
+Software Platform Information
+=============================
+Number of Runtimes:            1
+Default System Configuration:  zcu104_custom_platform
+System Configurations:
+  System Config Name:                      zcu104_custom_platform
+  System Config Description:               zcu104_custom_platform
+  System Config Default Processor Group:   xrt
+  System Config Default Boot Image:        standard
+  System Config Is QEMU Supported:         1
+  System Config Processor Groups:
+    Processor Group Name:      xrt
+    Processor Group CPU Type:  cortex-a53
+    Processor Group OS Name:   linux
+  System Config Boot Images:
+    Boot Image Name:           standard
+    Boot Image Type:           
+    Boot Image BIF:            zcu104_custom_platform/boot/linux.bif
+    Boot Image Data:           zcu104_custom_platform/xrt/image
+    Boot Image Boot Mode:      sd
+    Boot Image RootFileSystem: 
+    Boot Image Mount Path:     /mnt
+    Boot Image Read Me:        zcu104_custom_platform/boot/generic.readme
+    Boot Image QEMU Args:      zcu104_custom_platform/qemu/pmu_args.txt:zcu104_custom_platform/qemu/qemu_args.txt
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
+Supported Runtimes:
+  Runtime: OpenCL
+
