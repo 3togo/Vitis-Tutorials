@@ -1,0 +1,12 @@
+activateView("Explorer", "ProjectExplorer", "CTabItem.EXPLORER");
+selectTreeTable("dpu_trd_kernels", "dpu_trd_system", "Explorer", "ProjectExplorer", "TreeViewer.NavigatorContentServiceContentProvider");
+selectTreeTable("dpu_trd_system.sprj", "dpu_trd_system", "Explorer", "ProjectExplorer", "TreeViewer.NavigatorContentServiceContentProvider");
+selectTreeTable("dpu_trd_system", "dpu_trd_system", EventType.POPUP_TRIGGER_CLICK, "Explorer", "ProjectExplorer", "TreeViewer.NavigatorContentServiceContentProvider");
+selectMenuItem("Build Project", "Explorer", "ProjectExplorer", "MenuItem.BUILD_PROJECT");
+activateView("Console", "ConsoleView", "CTabItem.CONSOLE");
+activateView("Problems", "0 items", "ProblemsView", "CTabItem.PROBLEMS");
+activateView("Vitis Log", "SDKLogView", "CTabItem.VITIS_LOG");
+activateView("Guidance", "SDXDrcView", "CTabItem.GUIDANCE");
+activateView("Console", "ConsoleView", "CTabItem.CONSOLE");
+selectTreeTable("Link Summary", "dpu_trd_system > dpu_trd_system_hw_link > Hardware > dpu", "Assistant", "SDXAssistantView", "TreeViewer.AssistantContentProvider");
+activateView("Explorer", "ProjectExplorer", "CTabItem.EXPLORER");

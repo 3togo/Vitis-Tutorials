@@ -1,0 +1,38 @@
+#! /bin/bash
+vitis_dir=/opt/Xilinx
+for mfile in bitbake.lock hashserve.sock bitbake.sock; do
+    mfile2="step2_petalinux/build/petalinux/build/$mfile"
+    echo $mfile2
+    if [ -f $mfile2 ]; then
+        cmd="rm $mfile2"
+        echo $cmd
+        $cmd
+    fi
+done
+#exit 0
+
+petalinux_dir=/opt/focal/PetaLinux
+settings=()
+settings+=("$vitis_dir/Vitis/2021.2/settings64.sh")
+settings+=("$petalinux_dir/2021.2/settings.sh")
+for setting in "${settings[@]}"; do
+    [[ ! -f $setting ]] && echo "$setting cannot be found!" && exit 1 
+    #echo -e "\n$setting\n"
+    cmd="source $setting"
+    echo $cmd
+    $cmd
+done
+#exit 0
+
+if "$1" == "all"; then
+    cmd="make all"
+    echo $cmd
+    $cmd
+else
+processs=("step2_petalinux petalinux_build" "step2_petalinux petal
+#    make -C step2_petalinux petalinux_build
+#    [[ "$?" -ne "0" ]] && echo "petalinux_build failed" && exit $?
+#    make -C step2_petalinux petalinux_build_sdk
+#    [[ "$?" -ne "0" ]] && echo "petalinux_build failed_sdk" && exit $?
+#    make -C step3_pfm all
+fi
