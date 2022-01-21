@@ -22,11 +22,16 @@ ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 PETALINUX_CONFIG=$(PETALINUX_DIR)/project-spec/configs/config
 PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
 # refer to https://www.cnblogs.com/hankfu/p/14074595.html
-PETA=/opt/xilinx/peta/2021.2
+VER=2021.2
+ARCH=aarch64
+PETA=/opt/xilinx/peta/$(VER)
 PRE_MIRROR=$(PETA)/downloads
 PRE_MIRROR_CFG=CONFIG_PRE_MIRROR_URL=\"file://$(PRE_MIRROR)\"
-AARCH64=$(PETA)/sstate/aarch64
-AARCH64_CFG=CONFIG_YOCTO_LOCAL_SSTATE_FEEDS_URL=\"$(AARCH64)\"
+ARCH_DIR=$(PETA)/sstate/$(ARCH)
+ARCH_CFG=CONFIG_YOCTO_LOCAL_SSTATE_FEEDS_URL=\"$(ARCH_DIR)\"
+BSP_CFG=$(PETALINUX_DIR)/project-spec/meta-user/conf/petalinuxbsp.conf
+DL_DIR=/home/$(USER)/plnx-workspace/$(VER)/downloads
+SSTATE_DIR=/home/$(USER)/plnx-workspace/$(VER)/sstate-cache/$(ARCH)
 ONLINE=
 
 .PHONY: all get_xsa petalinux clean main
@@ -42,6 +47,16 @@ get_xsa:
 update_dtsi:
 	@cp -f system-user.dtsi $(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
 
+update_sstate_dl_dir:
+ifeq ("$(wildcard $(DL_DIR))", "")
+	mkdir -p $(DL_DIR)
+endif
+ifeq ("$(wildcard $(SSTATE_DIR))", "")
+	mkdir -p $(SSTATE_DIR)
+endif
+	echo 'DL_DIR="$(DL_DIR)"' >> $(BSP_CFG)
+	echo 'SSTATE_DIR="$(SSTATE_DIR)"' >> $(BSP_CFG)
+
 update_config:
 	# PetaLinux Config: Use EXT4 as rootfs format
 	echo "CONFIG_SUBSYSTEM_ROOTFS_EXT4=y" >> $(PETALINUX_CONFIG)
@@ -56,15 +71,15 @@ ifneq ("$(wildcard $(PRE_MIRROR))", "")
 else
 	ONLINE=1
 endif
-ifneq ("$(wildcard $(AARCH64))", "")
-	echo "$(AARCH64_CFG)" >> $(PETALINUX_CONFIG)
+ifneq ("$(wildcard $(ARCH_DIR))", "")
+	echo "$(ARCH_CFG)" >> $(PETALINUX_CONFIG)
 	echo "CONFIG_YOCTO_NETWORK_SSTATE_FEEDS=y" >> $(PETALINUX_CONFIG)
 else
 	ONLINE=1
 endif
 
 ifndef ONLINE
-	echo 'CONFIG_YOCTO_NETWORK_SSTATE_FEEDS_URL="http://petalinux.xilinx.com/sswreleases/rel-v${PETALINUX_VER%%.*}/aarch64/sstate-cache"' >> $(PETALINUX_CONFIG)
+	echo 'CONFIG_YOCTO_NETWORK_SSTATE_FEEDS_URL="http://petalinux.xilinx.com/sswreleases/rel-v${PETALINUX_VER%%.*}/$(ARCH)/sstate-cache"' >> $(PETALINUX_CONFIG)
 	echo 'CONFIG_YOCTO_BB_NO_NETWORK=y' >> $(PETALINUX_CONFIG)
 else
 	echo "ONLINE MODE......"
@@ -112,11 +127,11 @@ petalinux_build:
 	echo "CONFIG AGAIN"
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 	echo "BUILD"
-	petalinux-build -p $(PETALINUX_DIR)
+	petalinux-build -s mrproper -p $(PETALINUX_DIR)
 	cd $(PETALINUX_DIR) && petalinux-package --boot --u-boot --force
 
 petalinux_build_sdk:
-	petalinux-build -p $(PETALINUX_DIR) --sdk
+	petalinux-build -s mrproper -p $(PETALINUX_DIR) --sdk
 	cd $(PETALINUX_DIR) && petalinux-package --sysroot
 
 clean:
