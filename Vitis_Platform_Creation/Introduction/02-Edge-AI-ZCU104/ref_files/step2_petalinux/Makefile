@@ -47,7 +47,7 @@ get_xsa:
 update_dtsi:
 	@cp -f system-user.dtsi $(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
 
-update_sstate_dl_dir:
+update_sstate_dl_dirs:
 ifeq ("$(wildcard $(DL_DIR))", "")
 	mkdir -p $(DL_DIR)
 endif
@@ -110,6 +110,8 @@ petalinux_proj:
 ifeq ("$(wildcard $(ABS_BUILD_PATH))", "")
 	echo "CREATE"
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
+	echo "UPDATE_SSTATE_DL_DIRS"
+	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_sstate_dl_dirs
 	echo "UPDATE_CONFIG"
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
 	echo "CONFIG"
