@@ -129,13 +129,14 @@ petalinux_build:
 	echo "CONFIG AGAIN"
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 	echo "BUILD"
-	petalinux-build -s mrproper -p $(PETALINUX_DIR)
+	petalinux-build -p $(PETALINUX_DIR)
 	cd $(PETALINUX_DIR) && petalinux-package --boot --u-boot --force
 
 petalinux_build_sdk:
-	petalinux-build -s mrproper -p $(PETALINUX_DIR) --sdk
+	petalinux-build -p $(PETALINUX_DIR) --sdk
 	cd $(PETALINUX_DIR) && petalinux-package --sysroot
 
 clean:
 	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.xsa
-	#$(RM) -r  vivado*.log vivado*.jou *.xsa
+	# $(RM) -r  vivado*.log vivado*.jou *.xsa
+	# petalinux-build -x mrproper
