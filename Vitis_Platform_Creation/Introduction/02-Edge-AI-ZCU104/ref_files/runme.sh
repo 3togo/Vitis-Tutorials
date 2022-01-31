@@ -15,7 +15,11 @@ function check_xrt() {
 function install_missing() {
     # sudo dpkg-reconfigure dash
     # sudo apt install libtool autoconf texinfo gcc-multilib netstat-nat net-tools libtinfo5
+<<<<<<< HEAD
     PACKAGES="xvfb libboost-all-dev autoconf libtool texinfo iproute2 gcc g++ net-tools libncurses5-dev zlib1g:i386 libssl-dev flex bison libselinux1 xterm autoconf libtool texinfo zlib1g-dev gcc-multilib build-essential screen pax gawk python3-pexpect python3-pip python3-git python3-jinja2 xz-utils debianutils iputils-ping libegl1-mesa libsdl1.2-dev pylint3 cpio tftpd-hpa libtinfo5 "
+=======
+    PACKAGES=" libboost-all-dev autoconf libtool texinfo iproute2 gcc g++ net-tools libncurses5-dev zlib1g:i386 libssl-dev flex bison libselinux1 xterm autoconf libtool texinfo zlib1g-dev gcc-multilib build-essential screen pax gawk python3-pexpect python3-pip python3-git python3-jinja2 xz-utils debianutils iputils-ping libegl1-mesa libsdl1.2-dev pylint3 cpio tftpd-hpa libtinfo5 "
+>>>>>>> 340cbeb2f2f175d664644620210925264ff4f2c5
     #MISSING=$(apt -qq list $PACKAGES 2>/dev/null |grep -v installed|awk -F '/' '{ print $1 }')
     MISSING=$(dpkg --get-selections $PACKAGES 2>&1 | grep -v 'install$' | awk '{ print $6 }')
 
@@ -125,3 +129,8 @@ delete_lock
 setup_source
 making $1
 cp_to_boot
+<<<<<<< HEAD
+=======
+source /opt/Xilinx/Vivado/2021.2/settings64.sh
+make
+>>>>>>> 340cbeb2f2f175d664644620210925264ff4f2c5
